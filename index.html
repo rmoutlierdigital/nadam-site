@@ -185,9 +185,18 @@ button:hover{
         <input type="number" id="oferta" placeholder="Ex.: 100">
     </div>
 
-    <button onclick="calcular()">
+    <div style="display:flex; gap:10px; margin-top:10px;">
+    
+    <button onclick="calcular()" style="flex:1;">
         Calcular Contribuição
     </button>
+
+    <button onclick="limparCampos()"
+        style="flex:1;background:#dc2626;">
+        Limpar
+    </button>
+
+</div>
 
     <div class="resultado" id="resultado">
 
@@ -264,4 +273,16 @@ function calcular(){
 </script>
 
 </body>
+function limparCampos(){
+
+    document.getElementById('renda').value = '';
+    document.getElementById('oferta').value = '';
+
+    document.getElementById('dizimoValor').innerText = 'R$ 0,00';
+    document.getElementById('primiciasValor').innerText = 'R$ 0,00';
+    document.getElementById('ofertaValor').innerText = 'R$ 0,00';
+    document.getElementById('totalValor').innerText = 'R$ 0,00';
+
+    document.getElementById('resultado').style.display = 'none';
+}
 </html>
