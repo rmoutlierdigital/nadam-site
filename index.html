@@ -28,7 +28,7 @@ body{
     background:#ffffff;
     border-radius:20px;
     padding:30px;
-    box-shadow:0 10px 30px rgba(0,0,0,0.25);
+    box-shadow:0 10px 30px rgba(0,0,0,.25);
 }
 
 .logo{
@@ -59,12 +59,7 @@ body{
     border-radius:12px;
     padding:15px;
     margin-bottom:25px;
-}
-
-.versiculo strong{
-    display:block;
-    margin-bottom:5px;
-    color:#0f172a;
+    line-height:1.6;
 }
 
 .form-group{
@@ -91,6 +86,16 @@ input:focus{
     border-color:#16a34a;
 }
 
+.info{
+    background:#ecfdf5;
+    border:1px solid #bbf7d0;
+    color:#166534;
+    padding:12px;
+    border-radius:10px;
+    margin-bottom:20px;
+    font-size:14px;
+}
+
 button{
     width:100%;
     background:#16a34a;
@@ -100,7 +105,7 @@ button{
     border-radius:10px;
     font-size:18px;
     cursor:pointer;
-    transition:0.3s;
+    transition:.3s;
 }
 
 button:hover{
@@ -119,12 +124,17 @@ button:hover{
     display:flex;
     justify-content:space-between;
     padding:10px 0;
+    border-bottom:1px solid #e2e8f0;
+}
+
+.item:last-child{
+    border-bottom:none;
 }
 
 .total{
-    margin-top:12px;
+    margin-top:15px;
     padding-top:15px;
-    border-top:2px solid #d1d5db;
+    border-top:3px solid #16a34a;
     font-size:24px;
     font-weight:bold;
     color:#16a34a;
@@ -154,18 +164,20 @@ button:hover{
     </div>
 
     <div class="versiculo">
-        <strong>📖 Malaquias 3:10</strong>
+        <strong>📖 Malaquias 3:10</strong><br>
         "Trazei todos os dízimos à casa do tesouro, para que haja mantimento na minha casa."
+    </div>
+
+    <div class="info">
+        🌾 <strong>Regra das Primícias:</strong><br>
+        As primícias são calculadas automaticamente como o valor correspondente a
+        <strong>1 dia de trabalho</strong>, ou seja:
+        <strong>Renda Mensal ÷ 30 dias</strong>.
     </div>
 
     <div class="form-group">
         <label>💰 Renda Mensal (R$)</label>
-        <input type="number" id="renda" placeholder="Digite sua renda">
-    </div>
-
-    <div class="form-group">
-        <label>🌾 Primícias (%)</label>
-        <input type="number" id="primicias" placeholder="Ex.: 5">
+        <input type="number" id="renda" placeholder="Ex.: 5000">
     </div>
 
     <div class="form-group">
@@ -185,7 +197,7 @@ button:hover{
         </div>
 
         <div class="item">
-            <span>🌾 Primícias</span>
+            <span>🌾 Primícias (1 dia de trabalho)</span>
             <span id="primiciasValor">R$ 0,00</span>
         </div>
 
@@ -209,6 +221,7 @@ button:hover{
 </div>
 
 <script>
+
 function moeda(valor){
     return valor.toLocaleString('pt-BR',{
         style:'currency',
@@ -221,14 +234,15 @@ function calcular(){
     const renda =
         parseFloat(document.getElementById('renda').value) || 0;
 
-    const primiciasPercentual =
-        parseFloat(document.getElementById('primicias').value) || 0;
-
     const oferta =
         parseFloat(document.getElementById('oferta').value) || 0;
 
+    // Dízimo = 10% da renda
     const dizimo = renda * 0.10;
-    const primicias = renda * (primiciasPercentual / 100);
+
+    // Primícias = 1 dia de trabalho
+    const primicias = renda / 30;
+
     const total = dizimo + primicias + oferta;
 
     document.getElementById('dizimoValor').innerText =
@@ -246,6 +260,7 @@ function calcular(){
     document.getElementById('resultado').style.display =
         'block';
 }
+
 </script>
 
 </body>
