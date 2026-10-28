@@ -1,1 +1,252 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NADAM - Nova Assembleia de Deus no Amazonas</title>
 
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI', Arial, sans-serif;
+}
+
+body{
+    background:linear-gradient(135deg,#0f172a,#1e293b);
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+}
+
+.container{
+    width:100%;
+    max-width:600px;
+    background:#ffffff;
+    border-radius:20px;
+    padding:30px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.25);
+}
+
+.logo{
+    text-align:center;
+    margin-bottom:25px;
+}
+
+.logo h1{
+    color:#0f172a;
+    font-size:34px;
+    margin-bottom:5px;
+}
+
+.logo h2{
+    color:#16a34a;
+    font-size:20px;
+    margin-bottom:10px;
+}
+
+.logo p{
+    color:#64748b;
+    font-size:15px;
+}
+
+.versiculo{
+    background:#f8fafc;
+    border-left:5px solid #16a34a;
+    border-radius:12px;
+    padding:15px;
+    margin-bottom:25px;
+}
+
+.versiculo strong{
+    display:block;
+    margin-bottom:5px;
+    color:#0f172a;
+}
+
+.form-group{
+    margin-bottom:18px;
+}
+
+label{
+    display:block;
+    margin-bottom:8px;
+    font-weight:600;
+    color:#334155;
+}
+
+input{
+    width:100%;
+    padding:14px;
+    border:1px solid #cbd5e1;
+    border-radius:10px;
+    font-size:16px;
+}
+
+input:focus{
+    outline:none;
+    border-color:#16a34a;
+}
+
+button{
+    width:100%;
+    background:#16a34a;
+    color:white;
+    border:none;
+    padding:15px;
+    border-radius:10px;
+    font-size:18px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+button:hover{
+    background:#15803d;
+}
+
+.resultado{
+    display:none;
+    margin-top:25px;
+    background:#f8fafc;
+    border-radius:15px;
+    padding:20px;
+}
+
+.item{
+    display:flex;
+    justify-content:space-between;
+    padding:10px 0;
+}
+
+.total{
+    margin-top:12px;
+    padding-top:15px;
+    border-top:2px solid #d1d5db;
+    font-size:24px;
+    font-weight:bold;
+    color:#16a34a;
+}
+
+.footer{
+    text-align:center;
+    margin-top:25px;
+    color:#64748b;
+    font-size:13px;
+}
+
+.footer strong{
+    color:#16a34a;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="logo">
+        <h1>⛪ NADAM</h1>
+        <h2>Nova Assembleia de Deus no Amazonas</h2>
+        <p>Calculadora de Dízimos, Primícias e Ofertas</p>
+    </div>
+
+    <div class="versiculo">
+        <strong>📖 Malaquias 3:10</strong>
+        "Trazei todos os dízimos à casa do tesouro, para que haja mantimento na minha casa."
+    </div>
+
+    <div class="form-group">
+        <label>💰 Renda Mensal (R$)</label>
+        <input type="number" id="renda" placeholder="Digite sua renda">
+    </div>
+
+    <div class="form-group">
+        <label>🌾 Primícias (%)</label>
+        <input type="number" id="primicias" placeholder="Ex.: 5">
+    </div>
+
+    <div class="form-group">
+        <label>🙏 Oferta Voluntária (R$)</label>
+        <input type="number" id="oferta" placeholder="Ex.: 100">
+    </div>
+
+    <button onclick="calcular()">
+        Calcular Contribuição
+    </button>
+
+    <div class="resultado" id="resultado">
+
+        <div class="item">
+            <span>💰 Dízimo (10%)</span>
+            <span id="dizimoValor">R$ 0,00</span>
+        </div>
+
+        <div class="item">
+            <span>🌾 Primícias</span>
+            <span id="primiciasValor">R$ 0,00</span>
+        </div>
+
+        <div class="item">
+            <span>🙏 Oferta</span>
+            <span id="ofertaValor">R$ 0,00</span>
+        </div>
+
+        <div class="item total">
+            <span>Total</span>
+            <span id="totalValor">R$ 0,00</span>
+        </div>
+
+    </div>
+
+    <div class="footer">
+        <strong>⛪ NADAM</strong><br>
+        Nova Assembleia de Deus no Amazonas
+    </div>
+
+</div>
+
+<script>
+function moeda(valor){
+    return valor.toLocaleString('pt-BR',{
+        style:'currency',
+        currency:'BRL'
+    });
+}
+
+function calcular(){
+
+    const renda =
+        parseFloat(document.getElementById('renda').value) || 0;
+
+    const primiciasPercentual =
+        parseFloat(document.getElementById('primicias').value) || 0;
+
+    const oferta =
+        parseFloat(document.getElementById('oferta').value) || 0;
+
+    const dizimo = renda * 0.10;
+    const primicias = renda * (primiciasPercentual / 100);
+    const total = dizimo + primicias + oferta;
+
+    document.getElementById('dizimoValor').innerText =
+        moeda(dizimo);
+
+    document.getElementById('primiciasValor').innerText =
+        moeda(primicias);
+
+    document.getElementById('ofertaValor').innerText =
+        moeda(oferta);
+
+    document.getElementById('totalValor').innerText =
+        moeda(total);
+
+    document.getElementById('resultado').style.display =
+        'block';
+}
+</script>
+
+</body>
+</html>
